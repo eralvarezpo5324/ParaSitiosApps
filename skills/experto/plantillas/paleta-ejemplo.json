@@ -1,0 +1,33 @@
+{
+  "nombre": "Ejemplo: paleta segura para daltonismo",
+  "colores": {
+    "fondo":            { "hex": "#FFFFFF", "uso": "Fondo general de la página" },
+    "superficie":       { "hex": "#F1F4F9", "uso": "Tarjetas y secciones alternas" },
+    "texto":            { "hex": "#16203A", "uso": "Texto principal y títulos" },
+    "texto-secundario": { "hex": "#4A5568", "uso": "Texto de apoyo y pies de foto" },
+    "primario":         { "hex": "#1D4ED8", "uso": "Botones principales y enlaces" },
+    "sobre-primario":   { "hex": "#FFFFFF", "uso": "Texto dentro de botones principales" },
+    "acento":           { "hex": "#FBBF24", "uso": "Resaltar ofertas y etiquetas" },
+    "sobre-acento":     { "hex": "#16203A", "uso": "Texto sobre el color de acento" },
+    "borde":            { "hex": "#6B7280", "uso": "Bordes de campos de formulario" },
+    "exito":            { "hex": "#0B7285", "uso": "Mensajes de confirmación (siempre con icono de palomita)" },
+    "error":            { "hex": "#7F1D1D", "uso": "Mensajes de error (siempre con icono de alerta y texto)" }
+  },
+  "pares": [
+    { "frente": "texto",            "fondo": "fondo",      "tipo": "texto" },
+    { "frente": "texto",            "fondo": "superficie", "tipo": "texto" },
+    { "frente": "texto-secundario", "fondo": "fondo",      "tipo": "texto" },
+    { "frente": "texto-secundario", "fondo": "superficie", "tipo": "texto" },
+    { "frente": "primario",         "fondo": "fondo",      "tipo": "texto" },
+    { "frente": "sobre-primario",   "fondo": "primario",   "tipo": "texto" },
+    { "frente": "sobre-acento",     "fondo": "acento",     "tipo": "texto" },
+    { "frente": "borde",            "fondo": "fondo",      "tipo": "interfaz" },
+    { "frente": "exito",            "fondo": "fondo",      "tipo": "texto" },
+    { "frente": "error",            "fondo": "fondo",      "tipo": "texto" }
+  ],
+  "distinguir": [
+    ["exito", "error"],
+    ["primario", "acento"],
+    ["primario", "texto"]
+  ]
+}

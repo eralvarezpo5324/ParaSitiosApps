@@ -1,0 +1,15 @@
+# Secretos: nunca al repositorio
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Resultados de evaluaciones de la skill
+skills/*-workspace/
