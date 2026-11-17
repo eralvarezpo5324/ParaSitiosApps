@@ -1,6 +1,6 @@
 # Fase 1 · Descubrimiento
 
-Revisado: noviembre de 2026.
+Revisado: 17 de noviembre de 2026 (requisito de prueba cerrada de Google Play verificado en la ayuda de Play Console).
 
 El objetivo es entender el negocio lo suficiente para proponer algo mejor que lo que se pidió. Preguntar bien ahorra reconstruir después.
 
@@ -69,7 +69,7 @@ Parte de "¿qué debe poder hacer cada tipo de usuario?". Después profundiza se
 | Blog o noticias | ¿Quién escribe y cada cuánto? Si nadie lo hará, es mejor no incluirlo. |
 | Panel de administración | ¿Qué exactamente necesita cambiar el cliente sin ayuda? |
 | Notificaciones | ¿Por correo, WhatsApp, SMS o notificación en el celular? ¿Quién paga el envío? |
-| App móvil | ¿Qué necesita del teléfono que una página web no pueda dar? Cámara, notificaciones, uso sin conexión, presencia en la tienda de apps. |
+| App móvil | ¿Qué necesita del teléfono que una página web no pueda dar? Cámara, notificaciones, uso sin conexión, presencia en la tienda de apps. ¿Cómo llegará a los teléfonos? Ver bloque G. |
 | Chat | ¿Propio o enlace a WhatsApp? El enlace a WhatsApp resuelve casi siempre. |
 | Varios idiomas | ¿Quién traduce y quién mantiene las traducciones al día? |
 | Mapas, calendarios, facturación, CRM | ¿Con qué sistema exacto se conecta y quién tiene esa cuenta? |
@@ -108,7 +108,16 @@ No pases a la Fase 3 sin esto:
 - **¿Qué tipo de hosting es?** Opciones: compartido con cPanel; servidor propio o VPS con acceso completo; plataforma moderna; no lo sé. Si no lo sabe, guíalo paso a paso para averiguarlo con `despliegue.md`.
 - **¿Quién tiene los accesos?** Dominio, hosting, correo. ¿A nombre de quién están?
 - **¿El dominio ya existe?** ¿El correo del negocio usa ese dominio? Mover el sitio sin cuidado puede tirar el correo.
-- Para apps: ¿existen ya las cuentas de desarrollador de Apple y de Google, y a nombre de quién?
+
+**Para apps móviles**, además (el dominio sigue importando: la política de privacidad y la página para borrar la cuenta van en la web):
+- **¿Cómo llegará a los teléfonos?** Va primero, en la Fase 0 si ya sabías que era app.
+  a) Android: primero un APK de prueba y después Google Play (Recomendado: se prueba en teléfonos reales desde el primer hito y después llega a cualquiera)
+  b) Android y iPhone, por Google Play y App Store
+  c) Solo un APK instalado directo en teléfonos conocidos, sin tienda (uso interno)
+  d) No lo sé, recomiéndame
+- **¿Existe ya la cuenta de desarrollador de Google Play? ¿Es personal o de empresa, y a nombre de quién?** Si es personal y se creó después del 13 de noviembre de 2023, o aún no existe y será personal, la publicación espera una prueba cerrada de 14 días con al menos 12 personas (`movil.md`, sección 8). Dilo ya: cambia el plazo.
+- **¿Quién reunirá a las personas de la prueba cerrada?** Más de 12, cada una con teléfono Android y cuenta de Google, dispuestas a usar la app dos semanas.
+- Si también va a iPhone: ¿existe la cuenta de Apple, y a nombre de quién?
 
 ### H. Datos, pagos y legal
 - ¿Qué datos de personas se van a guardar? Nombre, correo, teléfono, dirección, documentos, pagos.

@@ -53,7 +53,7 @@ El experto se detiene a pedir tu aprobación solo en las fases marcadas. Entre e
 
 | # | Fase | Qué se logra | Te pide aprobación |
 |---|---|---|---|
-| 0 | Arranque | Tipo de proyecto, tamaño, cliente o propio, idioma y países | |
+| 0 | Arranque | Tipo de proyecto, funciones clave, cliente o propio, idioma y países | |
 | 1 | Descubrimiento | Negocio, usuarios, funciones, referencias y dónde se publica | |
 | 2 | Análisis y propuesta | Conflictos, huecos, mejoras y preguntas para el cliente | Sí |
 | 3 | Arquitectura | Tecnología según el hosting, datos y modelo de amenazas | Sí |
@@ -64,7 +64,7 @@ El experto se detiene a pedir tu aprobación solo en las fases marcadas. Entre e
 | 8 | Publicación | Sitio en línea y verificado | Sí |
 | 9 | Entrega | Manual, accesos y mantenimiento | |
 
-Un proyecto pequeño (una página de aterrizaje) recorre una versión corta. Uno grande (cuentas, pagos, app móvil) recorre la completa con seguridad reforzada.
+El experto no te pregunta el tamaño: te pregunta qué funciones tendrá y con eso elige la ruta. Un proyecto que solo muestra información (una página de aterrizaje) recorre una versión corta. Uno con cuentas de usuario, pagos o datos sensibles, y toda app móvil, recorre la completa con seguridad reforzada.
 
 ---
 
@@ -125,7 +125,7 @@ La skill no fija ningún modelo. Para comprobar que se comporta igual con uno nu
 python3 pruebas/probar_con_modelo.py --modelo NOMBRE-DEL-MODELO
 ```
 
-Lanza ocho conversaciones de prueba y responde PASA o FALLA en cada una. Consume uso de tu cuenta.
+Lanza nueve conversaciones de prueba y responde PASA o FALLA en cada una. Consume uso de tu cuenta.
 
 ---
 

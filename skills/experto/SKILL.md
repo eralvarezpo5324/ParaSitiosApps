@@ -54,12 +54,12 @@ Antes de trabajar una fase, lee su guía. Las guías están en `referencias/` y 
 
 | # | Fase | Qué se logra | Guía a leer | Entregable en `docs/proyecto/` | Puerta |
 |---|---|---|---|---|---|
-| 0 | Arranque | Tipo de proyecto, tamaño, cliente o propio, idioma y países | (esta página) | `ESTADO.md` | No |
+| 0 | Arranque | Tipo de proyecto, funciones que definen la ruta, cliente o propio, idioma y países | (esta página) | `ESTADO.md` | No |
 | 1 | Descubrimiento | Entender negocio, usuarios, funciones, referencias y dónde se publicará | `descubrimiento.md` | Respuestas en `ESTADO.md` | No |
-| 2 | Análisis y propuesta | Conflictos, huecos y mejoras; preguntas para el cliente | `analisis-conflictos.md`, `legal-privacidad.md` | `brief-propuesta.md`, `preguntas-cliente.md` | **Sí** |
+| 2 | Análisis y propuesta | Conflictos, huecos y mejoras; preguntas para el cliente | `analisis-conflictos.md`, `legal-privacidad.md`, `movil.md` si aplica | `brief-propuesta.md`, `preguntas-cliente.md` | **Sí** |
 | 3 | Arquitectura | Tecnología según el hosting, datos, modelo de amenazas, plan por hitos | `arquitectura.md`, `seguridad.md` (momento 1), `movil.md` si aplica | `arquitectura.md` | **Sí** |
 | 4 | Diseño | Estructura, tipografía, paleta verificada, animación | `diseno.md`, `color-daltonismo.md`, `animacion.md` | `guia-diseno-color.md`, `paleta.json` | **Sí** |
-| 5 | Construcción | Cada hito funcionando y probado | `funcionalidad.md`, `seguridad.md` (momento 2) | Código y una prueba guiada por hito | **Sí**, al terminar |
+| 5 | Construcción | Cada hito funcionando y probado | `funcionalidad.md`, `seguridad.md` (momento 2), `movil.md` si aplica | Código y una prueba guiada por hito | **Sí**, al terminar |
 | 6 | Optimización | Rendimiento, SEO, GEO, CRO y accesibilidad | `rendimiento.md`, `seo-geo-cro.md` | Mediciones en `ESTADO.md` | No |
 | 7 | Seguridad | Auditoría como experto en ciberseguridad | `seguridad.md` (momento 3) | `reporte-seguridad.md` | **Sí** |
 | 8 | Publicación | Sitio o app en producción y verificado en vivo | `despliegue.md`, `movil.md` si aplica | Revisión externa en el reporte | **Sí**, antes de publicar |
@@ -75,30 +75,32 @@ Una sola ronda. Estos son los cuatro datos que necesitas. **Si su mensaje ya con
 
 1. **¿Para quién es?** Cliente o proyecto propio. Si es de un cliente, tu trabajo incluye detectar los huecos de lo que pidió y redactar las preguntas que el usuario le llevará. Si es propio, el usuario decide todo.
 2. **¿Qué es?** Página web, aplicación web, app móvil o una combinación.
-3. **¿Qué tan grande es?** Con su respuesta eliges la ruta de la sección 5.
+3. **¿Tendrá alguna de estas funciones?** Opción múltiple: cuentas de usuario; pagos o cobros en línea; datos sensibles (salud, dinero, menores o documentos personales); ninguna, solo mostrar información y recibir contactos. No preguntes el tamaño: el usuario sabe qué hará el proyecto, pero "pequeño" o "grande" en abstracto no lo puede juzgar. Con las funciones, lo que es y su descripción libre, eliges tú la ruta de la sección 5 y se la dices en una línea con la razón.
 4. **¿En qué idioma habla el cliente y en cuál sus usuarios finales, y en qué países opera?** Define el idioma de los entregables y las leyes aplicables.
 
 Pídele también que cuente con sus palabras qué pidió el cliente o qué quiere lograr. Esa descripción libre vale más que cualquier cuestionario: úsala para saltarte las preguntas que ya quedaron contestadas.
 
-## 5. Ruta según el tamaño
+**Si ya sabes que es una app móvil,** no hagas la pregunta 3: la ruta es Completa, sin importar sus funciones. Confírmalo en una línea ("Va por la ruta Completa, como toda app móvil: se firma, se instala en teléfonos ajenos y casi siempre pasa por la revisión de una tienda") y usa ese lugar para preguntar cómo llegará a los teléfonos: solo Android o también iPhone, y si será por tienda, con un archivo de instalación directa (APK) o primero uno y después la otra. Las opciones están en `referencias/descubrimiento.md`, bloque G. Si eso también ya lo dijo, la duda más útil es si la cuenta de desarrollador de Google Play es personal o de empresa, porque cambia el plazo de publicación. Si te enteras de que es app móvil por sus respuestas a esta ronda, la pregunta de distribución abre la Fase 1.
 
-Un proyecto pequeño no debe pasar por el cuestionario de uno grande. El usuario tendrá cada vez más clientes y necesita arrancar rápido.
+## 5. Ruta según las funciones
 
-| Ruta | Cuándo | Descubrimiento | Ajustes |
-|---|---|---|---|
-| **Exprés** | Página de aterrizaje o sitio informativo. Sin cuentas de usuario, sin pagos | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
-| **Estándar** | Sitio con varias secciones, formularios, blog, catálogo o tienda sencilla | 3 a 4 rondas | Flujo completo |
-| **Completa** | Aplicación web con cuentas, roles, pagos o datos sensibles. Toda app móvil | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
+Un proyecto sencillo no debe pasar por el cuestionario de uno complejo. El usuario tendrá cada vez más clientes y necesita arrancar rápido. **La ruta la decide la función de mayor riesgo, no el número de páginas:** una sola página con inicio de sesión va por la ruta Completa.
 
-La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos sensibles, sube de ruta y avísale.
+| Ruta | Funciones | Ejemplos | Descubrimiento | Ajustes |
+|---|---|---|---|---|
+| **Exprés** | Solo muestra información y recibe contactos (WhatsApp, llamada o un formulario que envía un correo). Sin cuentas, sin pagos, sin datos sensibles | Página de aterrizaje, sitio informativo | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
+| **Estándar** | Contenido que se actualiza o que guarda datos, sin cuentas de usuario: blog, catálogo, citas, formularios que guardan datos, panel para editar contenido, o un cobro que se hace en la página de la pasarela | Sitio de varias secciones, catálogo, tienda sencilla | 3 a 4 rondas | Flujo completo |
+| **Completa** | Cualquiera de estas: cuentas de usuario o roles, pagos dentro del propio sistema (pedidos ligados a una cuenta, suscripciones, saldo), datos sensibles. Toda app móvil, tenga o no esas funciones | Aplicación web con acceso para clientes, app para Android o iPhone | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
+
+Si eligió "ninguna" y su descripción no deja claro si es Exprés o Estándar, elige Estándar y díselo. La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos sensibles, sube de ruta y avísale.
 
 ## 6. Lo esencial de cada fase
 
 Las guías tienen el detalle. Esto es lo que no puede faltar.
 
-- **Fase 1.** Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
+- **Fase 1.** Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. En una app, pregunta cómo llegará a los teléfonos y de quién es la cuenta de desarrollador. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
 - **Fase 2.** Revisa la lógica antes de aceptar la lista de funciones: quién puede hacer qué, qué pasa cuando algo falla, qué choca con el hosting, el presupuesto, el plazo o la ley. Propón qué quitar, qué simplificar y qué añadir. En proyectos de cliente, lo que el usuario no sepa responder va a `preguntas-cliente.md`, en lenguaje llano.
-- **Fase 3.** Elige la tecnología más sencilla que cumpla y que el hosting soporte. El primer hito es siempre publicar un "hola mundo" en el hosting real con el método real: los problemas de hosting se descubren el primer día, no el último.
+- **Fase 3.** Elige la tecnología más sencilla que cumpla y que el hosting soporte. El primer hito es siempre publicar un "hola mundo" en el hosting real con el método real: los problemas de hosting se descubren el primer día, no el último. En una app, el primer hito es instalarla en un teléfono real por el mismo camino que usarán las personas que la prueben.
 - **Fase 4.** El usuario aprueba estructura, estilo y animación. El color lo decides y lo verificas tú. No avances con una paleta que no dé PASA.
 - **Fase 5.** Construye por hitos verticales: cada uno deja algo que funciona de punta a punta. Cada hito termina con una prueba guiada: pasos numerados y el resultado esperado, descrito con palabras y no con colores.
 - **Fase 6.** Mide antes y después. No declares mejoras que no mediste.

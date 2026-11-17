@@ -17,11 +17,13 @@
 |---|---|
 | Para quién | [Cliente: nombre / Proyecto propio] |
 | Qué es | [Página web / Aplicación web / App móvil] |
-| Ruta | [Exprés / Estándar / Completa] |
+| Funciones que definen la ruta | [Cuentas de usuario / Pagos / Datos sensibles / Ninguna] |
+| Ruta | [Exprés / Estándar / Completa], porque [razón en una línea] |
 | Idioma del cliente | |
 | Idioma de los usuarios finales | |
 | Países donde opera | |
-| Dónde se publica | [Hosting, tipo y proveedor] |
+| Dónde se publica | [Hosting, tipo y proveedor. En apps: APK directo, Google Play, App Store] |
+| Cuenta de desarrollador (apps) | [Personal u organización, a nombre de quién, fecha de creación] |
 | Nivel de seguridad | [Básico / Reforzado] |
 | Fecha comprometida | |
 

@@ -401,7 +401,8 @@ class EstructuraDeLaSkill(unittest.TestCase):
                         "paleta-verificada.html", "CLAUDE.md", "llms.txt", "robots.txt",
                         "sitemap.xml", "hooks.json", "manifest.json", "sftp.json",
                         "sftp-config.json", "installed.json", "package.json",
-                        "composer.json", "package-lock.json", "guia-color.md"}
+                        "composer.json", "package-lock.json", "guia-color.md",
+                        "eas.json"}
         for guia in list((SKILL / "referencias").glob("*.md")) + list((SKILL / "revisores").glob("*.md")):
             texto = guia.read_text(encoding="utf-8")
             for nombre in set(re.findall(r"`(?:[\w/-]+/)?([\w-]+\.(?:md|py|json))`", texto)):
@@ -421,6 +422,52 @@ class EstructuraDeLaSkill(unittest.TestCase):
         cabecera = (SKILL / "SKILL.md").read_text(encoding="utf-8").split("---")[1]
         self.assertNotIn("model:", cabecera)
         self.assertNotIn("effort:", cabecera)
+
+
+class EvaluacionConModelo(unittest.TestCase):
+    """La revisión de respuestas de probar_con_modelo.py, sin llamar a ningún modelo."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(RAIZ / "pruebas"))
+        import probar_con_modelo
+        cls.pcm = probar_con_modelo
+        cls.caso = next(c for c in probar_con_modelo.CASOS if c[0] == "app-android")
+
+    @staticmethod
+    def salida(respuesta, activada=True):
+        eventos = [{"type": "system", "subtype": "init", "model": "modelo-de-prueba"}]
+        if activada:
+            eventos.append({"type": "assistant", "message": {"content": [
+                {"type": "tool_use", "name": "Skill", "input": {"skill": "experto"}}]}})
+        eventos.append({"type": "result", "result": respuesta})
+        return "\n".join(json.dumps(e) for e in eventos)
+
+    def test_todos_los_casos_tienen_la_misma_forma(self):
+        for caso in self.pcm.CASOS:
+            self.assertEqual(len(caso), 7, caso[0])
+            self.assertIsInstance(caso[5], list, caso[0])
+
+    def test_app_android_pasa_si_confirma_la_ruta_completa(self):
+        respuesta = ("Ronda 1 de 1 · Arranque. Va por la ruta Completa, como toda app móvil.\n"
+                     "1. ¿La cuenta de Google Play es personal o de empresa?\n"
+                     "   a) De empresa (Recomendado)")
+        paso, problemas, modelo = self.pcm.evaluar(self.salida(respuesta), self.caso)
+        self.assertTrue(paso, problemas)
+        self.assertEqual(modelo, "modelo-de-prueba")
+
+    def test_app_android_falla_si_pregunta_el_tamano(self):
+        respuesta = ("Ronda 1 de 1 · Arranque\n3. ¿Qué tan grande es?\n"
+                     "   a) Pequeño (Recomendado)\n   b) Mediano\n   c) Grande: ruta completa")
+        paso, problemas, _ = self.pcm.evaluar(self.salida(respuesta), self.caso)
+        self.assertFalse(paso)
+        self.assertTrue(any("tan grande" in p for p in problemas), problemas)
+
+    def test_detecta_que_la_skill_no_se_activo(self):
+        respuesta = "Ronda 1. Ruta Completa (Recomendado)"
+        paso, problemas, _ = self.pcm.evaluar(self.salida(respuesta, activada=False), self.caso)
+        self.assertFalse(paso)
+        self.assertIn("la skill no se activó", problemas)
 
 
 if __name__ == "__main__":

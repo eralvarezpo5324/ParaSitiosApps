@@ -1,6 +1,6 @@
 # Apps móviles
 
-Revisado: noviembre de 2026. **Los requisitos de las tiendas cambian varias veces al año.** Antes de planear fechas o costos, verifica las fuentes oficiales del final. Los datos marcados "(verificar)" son una foto de esta fecha.
+Revisado: 17 de noviembre de 2026; la entrega en Android (sección 8) se verificó en la ayuda de Play Console, developer.android.com y la documentación de Expo. **Los requisitos de las tiendas cambian varias veces al año.** Antes de planear fechas o costos, verifica las fuentes oficiales del final. Los datos marcados "(verificar)" son una foto de esta fecha.
 
 ## 1. ¿De verdad hace falta una app?
 
@@ -32,8 +32,8 @@ Consulta la versión estable actual y los requisitos de cada herramienta antes d
 
 Dilo en la Fase 2, porque afecta costo y plazo:
 
-- **Cuentas de desarrollador a nombre del cliente.** Apple cobra una cuota anual y Google un pago único (verificar importes). Para registrarse como empresa, Apple pide un número D-U-N-S, que puede tardar días o semanas. **Empieza estos trámites al iniciar el proyecto.**
-- **Cuentas personales nuevas en Google Play:** exigen una prueba cerrada con un grupo de personas durante un periodo antes de poder publicar (verificar condiciones vigentes).
+- **Cuentas de desarrollador a nombre del cliente.** Apple cobra una cuota anual (verificar importe) y Google un pago único de 25 dólares, con identificación oficial. Para registrarse como empresa, Apple y Google piden un número D-U-N-S: es gratuito, pero Google avisa que puede tardar hasta 30 días. **Empieza estos trámites al iniciar el proyecto.**
+- **Cuentas personales nuevas en Google Play:** antes de publicar exigen una prueba cerrada de 14 días con al menos 12 personas, más la revisión de Google. Suma unas tres semanas al plan. Detalle en la sección 8.
 - **La revisión tarda** y puede rechazar la app. Nunca prometas una fecha de publicación exacta.
 - **Política de privacidad pública** obligatoria, y declaración de qué datos recoge la app en ambas tiendas.
 - **Eliminación de cuenta:** si la app permite crear cuentas, debe permitir borrarlas desde la app. Google pide además un enlace web para solicitarlo.
@@ -79,11 +79,50 @@ Marco de referencia: OWASP MASVS. La regla que lo resume: **todo lo que va dentr
 ## 7. Pruebas
 
 - **En teléfonos reales:** al menos un Android de gama baja o media y un iPhone. El simulador no muestra los problemas de rendimiento.
-- Canales de prueba de las tiendas para que el usuario y el cliente instalen versiones previas.
+- Versiones previas para el usuario y el cliente: en Android, un APK de prueba y después las pistas de prueba de Google Play (sección 8); en iPhone, TestFlight.
 - Casos propios de móvil: sin conexión, conexión lenta, llamada entrante a mitad de una acción, app en segundo plano, permisos negados, pantalla girada, texto del sistema muy grande.
 - Prueba guiada para el usuario por cada hito, igual que en web.
 
-## 8. Publicación
+## 8. Entrega por etapas en Android
+
+Explícale estos tres términos la primera vez que aparezcan:
+
+- **APK:** el archivo que se instala directo en un teléfono Android. Sirve para probar y para uso interno sin tienda.
+- **AAB (Android App Bundle):** el formato que se sube a Google Play; con él, Google arma el APK que le toca a cada teléfono. Desde agosto de 2021 es obligatorio para toda app nueva en Google Play: ahí no se sube un APK.
+- **Firma:** toda app de Android va firmada con una llave. Usa la firma de apps de Google Play (Play App Signing): Google guarda la llave que firma lo que reciben los usuarios y el equipo solo usa una "llave de subida". Si esa llave se pierde, el dueño de la cuenta pide restablecerla. Sin la firma de Google Play, perder la llave obliga a publicar una app nueva.
+
+### Las etapas
+
+| Etapa | Qué se entrega | Quién la instala | Cuándo |
+|---|---|---|---|
+| 1. APK de prueba | APK firmado con un perfil de pruebas | El usuario y el cliente, directo en sus teléfonos | Desde el primer hito y en cada prueba guiada |
+| 2. Prueba interna | AAB en la pista de prueba interna de Google Play | Hasta 100 personas invitadas por correo | En cuanto exista la ficha. Llega en segundos; las actualizaciones no esperan revisión, pero la primera versión de la app sí |
+| 3. Prueba cerrada | AAB en la pista de prueba cerrada | Personas invitadas por listas de correo o un grupo de Google, que se apuntan con un enlace | Desde que haya una versión que se pueda usar de verdad |
+| 4. Prueba abierta (opcional) | AAB en la pista de prueba abierta | Cualquiera que se apunte desde Google Play; sin límite o con un tope de 1,000 o más | Si se quiere una prueba pública antes del lanzamiento |
+| 5. Producción | AAB en producción | El público | Cuando la revisión de Google lo apruebe |
+
+Quien se apunta a la prueba interna recibe solo esa versión, aunque también esté invitado a otra pista. Las opiniones de las pruebas no afectan la calificación pública.
+
+Con Expo (la opción por defecto de la sección 2), la compilación en la nube genera AAB por defecto. Para el APK de prueba se crea un perfil de compilación con `"buildType": "apk"` dentro de la sección `android` del archivo `eas.json`. Para Google Play se usa siempre el AAB.
+
+### Cuentas personales nuevas: la prueba cerrada obligatoria
+
+Google la exige a las cuentas personales creadas después del 13 de noviembre de 2023. No aplica a cuentas de organización. Si no se planea desde el principio, atrasa la publicación varias semanas.
+
+- **Requisito:** al menos 12 personas apuntadas a una prueba cerrada **de forma continua durante los 14 días anteriores** a la solicitud. Si alguien se sale y vuelve a entrar, sus días empiezan de cero.
+- **Las personas:** cada una necesita un teléfono Android y una cuenta de Google, y debe usar la app como un usuario real. Si no la usan, Google puede pedir más pruebas. Pídele al cliente desde la Fase 1 que reúna a más de 12, por si alguien se sale.
+- **Después:** en el Panel de Play Console, el dueño de la cuenta presiona "Solicitar acceso a producción" y contesta un cuestionario sobre la prueba, la app y si está lista. Google suele responder en 7 días o menos.
+- **Plazo realista:** unas tres semanas desde que la prueba cerrada arranca con 12 personas. Arráncala en cuanto haya una versión usable, no al final: los 14 días corren en paralelo con los hitos siguientes.
+- **Alternativa:** si el cliente es una empresa, una cuenta de organización evita este requisito, pero pide número D-U-N-S.
+
+### Si se distribuye solo con APK, sin tienda
+
+Sirve para apps internas de un negocio (empleados, sucursales) o para pruebas. Ojo con:
+
+- Cada persona debe permitir la instalación de apps de origen desconocido, y las actualizaciones no llegan solas: hay que mandar cada versión nueva.
+- **Verificación de desarrolladores de Android:** desde el 30 de septiembre de 2026, en Brasil, Indonesia, Singapur y Tailandia, las apps que se descargan de tiendas participantes en teléfonos Android certificados deben estar registradas por un desarrollador con identidad verificada. Google anunció que lo extenderá a todo el mundo en 2027. A noviembre de 2026, el APK instalado directo todavía no lo exige (verificar); cuando llegue a todo el mundo, afectará también al APK de prueba de la etapa 1. Para no quedar bloqueado, registra la app desde ahora: con cuenta de Google Play, en Play Console; sin ella, en la consola para desarrolladores de Android, que tiene una cuenta gratuita de distribución limitada a 20 teléfonos y una completa con pago único de 25 dólares.
+
+## 9. Publicación
 
 Lo que solo puede hacer el usuario o su cliente, guiado paso a paso y de uno en uno:
 - Crear y verificar las cuentas de desarrollador, con verificación en dos pasos.
@@ -102,5 +141,9 @@ Si rechazan la app: lee el motivo exacto, corrige eso y responde con claridad. E
 
 - Apple, App Store Review Guidelines y requisitos de envío: developer.apple.com
 - Google Play, centro de políticas y requisito de nivel de API: support.google.com/googleplay/android-developer
+- Ayuda de Play Console: "Set up an open, closed, or internal test" (answer/9845334), "App testing requirements for new personal developer accounts" (answer/14151465), "Use Play App Signing" (answer/9842756), "Get started with Play Console" (answer/6112435)
+- Formato AAB: developer.android.com/guide/app-bundle
+- Verificación de desarrolladores de Android: developer.android.com/developer-verification
+- APK con Expo: docs.expo.dev/build-reference/apk
 - Documentación de Expo, React Native y Flutter: docs.expo.dev, reactnative.dev, flutter.dev
 - OWASP MASVS: mas.owasp.org
