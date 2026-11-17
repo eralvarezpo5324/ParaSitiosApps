@@ -16,34 +16,49 @@ Está hecha para trabajar con TDAH y daltonismo rojo-verde:
 
 Queda disponible en todas tus sesiones y en todos tus repositorios.
 
-1. Descarga el archivo [`dist/experto.zip`](dist/experto.zip) de este repositorio.
+1. Descarga el archivo [`dist/expert-apps.zip`](dist/expert-apps.zip) de este repositorio.
 2. Entra a claude.ai y abre **Customize** (Personalizar) y luego **Skills**.
 3. Presiona **+**, después **Create skill** y elige **Upload a skill**.
-4. Selecciona `experto.zip`. No lo descomprimas.
-5. Debe aparecer "experto" en tu lista de skills, activada.
+4. Selecciona `expert-apps.zip`. No lo descomprimas.
+5. Debe aparecer "expert-apps" en tu lista de skills, activada.
 
-Si Claude te muestra en el chat una tarjeta con el archivo `experto.skill`, basta con presionar **Guardar skill** en esa tarjeta.
+Si Claude te muestra en el chat una tarjeta con el archivo `expert-apps.skill`, basta con presionar **Guardar skill** en esa tarjeta.
 
 Los nombres del menú pueden cambiar con el tiempo. Si no los encuentras, pregúntale a Claude: "¿cómo subo una skill a mi cuenta?".
 
+### Actualizar una versión ya instalada
+
+Repite los mismos pasos con el archivo nuevo. Si Claude pregunta, elige **reemplazar**. Si al terminar ves dos skills con el mismo propósito en tu lista, borra la más antigua: dos versiones activas a la vez se estorban.
+
 ### Opción B: dentro de un solo repositorio
 
-Copia la carpeta `skills/experto` de este repositorio a `.claude/skills/experto` en el repositorio del cliente. Úsala solo si no puedes instalar la opción A. No instales las dos a la vez.
+Copia la carpeta `skills/expert-apps` de este repositorio a `.claude/skills/expert-apps` en el repositorio del cliente. Úsala solo si no puedes instalar la opción A. No instales las dos a la vez.
 
 ---
 
 ## 2. Usar
 
-Abre una sesión de Claude Code en el repositorio del cliente y escribe una de estas cosas:
+### Antes de un proyecto nuevo: un repositorio por cliente
+
+1. En github.com, presiona el botón **+** de arriba a la derecha y elige **New repository**.
+2. Escribe el nombre del cliente o del proyecto, marca **Private** y marca **Add a README file**.
+3. Presiona **Create repository**.
+4. En Claude Code, inicia una sesión nueva y elige ese repositorio.
+
+Si el repositorio nuevo no aparece en la lista de Claude, falta darle acceso a Claude en GitHub. Si empiezas en otro repositorio por error, el experto te avisa y te guía.
+
+### Qué escribir
+
+Con la sesión abierta en el repositorio del cliente, escribe una de estas cosas:
 
 | Quieres | Escribe |
 |---|---|
-| Empezar un proyecto | `/experto`, o cuenta con tus palabras lo que pidió el cliente |
+| Empezar un proyecto | `/expert-apps`, o cuenta con tus palabras lo que pidió el cliente |
 | Seguir donde te quedaste | `continuemos` |
 | Validar colores | "¿Está bien esta combinación?" con los códigos de color |
 | Revisar la seguridad de un sitio | "Revisa la seguridad antes de publicar" |
 
-En el menú, la skill puede aparecer como `experto` o como `anthropic-skills:experto`. Es la misma.
+En el menú, la skill puede aparecer como `expert-apps` o como `anthropic-skills:expert-apps`. Es la misma.
 
 ---
 
@@ -53,7 +68,7 @@ El experto se detiene a pedir tu aprobación solo en las fases marcadas. Entre e
 
 | # | Fase | Qué se logra | Te pide aprobación |
 |---|---|---|---|
-| 0 | Arranque | Tipo de proyecto, tamaño, cliente o propio, idioma y países | |
+| 0 | Arranque | Qué se construye, para quién, sus funciones clave, idioma y países | |
 | 1 | Descubrimiento | Negocio, usuarios, funciones, referencias y dónde se publica | |
 | 2 | Análisis y propuesta | Conflictos, huecos, mejoras y preguntas para el cliente | Sí |
 | 3 | Arquitectura | Tecnología según el hosting, datos y modelo de amenazas | Sí |
@@ -64,7 +79,9 @@ El experto se detiene a pedir tu aprobación solo en las fases marcadas. Entre e
 | 8 | Publicación | Sitio en línea y verificado | Sí |
 | 9 | Entrega | Manual, accesos y mantenimiento | |
 
-Un proyecto pequeño (una página de aterrizaje) recorre una versión corta. Uno grande (cuentas, pagos, app móvil) recorre la completa con seguridad reforzada.
+El experto elige el recorrido según las funciones, no te pregunta el tamaño. Una página que solo informa recorre una versión corta. Un proyecto con cuentas de usuario, pagos o datos delicados, y cualquier app móvil, recorre la completa con seguridad reforzada.
+
+En el arranque, lo primero que te pide es que cuentes el proyecto con tus palabras o pegues lo que pidió el cliente. Después pregunta solo lo que falte.
 
 ---
 
@@ -99,7 +116,7 @@ Son programas pequeños que dan siempre el mismo resultado, sin importar qué mo
 Normalmente los ejecuta el experto. Si quieres probar uno tú:
 
 ```bash
-python3 skills/experto/scripts/verificar_color.py skills/experto/plantillas/paleta-ejemplo.json
+python3 skills/expert-apps/scripts/verificar_color.py skills/expert-apps/plantillas/paleta-ejemplo.json
 ```
 
 `revisar_sitio.py` solo debe usarse en sitios tuyos o con autorización escrita del dueño.
@@ -115,7 +132,7 @@ Las guías llevan su fecha de revisión y sus fuentes oficiales. El experto las 
    ```bash
    python3 empaquetar.py
    ```
-3. Vuelve a subir `dist/experto.zip` a tu cuenta (paso 1 de la instalación).
+3. Vuelve a subir `dist/expert-apps.zip` a tu cuenta (paso 1 de la instalación).
 
 ### Cuando salga un modelo nuevo de Claude
 
@@ -132,7 +149,7 @@ Lanza ocho conversaciones de prueba y responde PASA o FALLA en cada una. Consume
 ## 7. Qué hay en este repositorio
 
 ```
-skills/experto/
+skills/expert-apps/
   SKILL.md           El flujo por fases y las reglas de trato
   referencias/       13 guías: descubrimiento, conflictos, arquitectura, diseño, color,
                      animación, funcionalidad, rendimiento, SEO-GEO-CRO, seguridad,

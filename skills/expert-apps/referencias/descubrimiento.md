@@ -39,6 +39,9 @@ Responde así: 1a, 2c, 3b
 | H. Datos, pagos y legal | Solo si hay formulario | Sí | A fondo |
 | I. Plazo, presupuesto y mantenimiento | Sí | Sí | Sí |
 | J. Cómo se medirá el éxito | Una pregunta | Sí | Sí |
+| K. Apps móviles | No aplica | No aplica | **Sí, en toda app** |
+
+Las funciones que deciden la ruta ya se preguntaron en la Fase 0. Aquí se ven a fondo: no las repitas, profundiza.
 
 ## Banco de preguntas
 
@@ -126,6 +129,18 @@ No pases a la Fase 3 sin esto:
 ### J. Cómo se medirá el éxito
 - ¿Qué número debe mejorar? Contactos por semana, ventas, citas, descargas, tiempo ahorrado.
 - ¿Cuál es el número hoy? Sin punto de partida no se puede demostrar la mejora.
+
+### K. Apps móviles
+Lee `movil.md` antes de esta ronda. Lo que ya se respondió en la Fase 0 (teléfonos, forma de instalación, cuentas de desarrollador) no se vuelve a preguntar.
+
+- **¿Quién la va a usar?** Opciones: público en general; clientes del negocio; solo empleados. Si es solo para empleados, existen vías de distribución privada que evitan la tienda pública.
+- **¿Cómo llegará a los teléfonos?** Opciones: primero un archivo de instalación para probar y después la tienda (Recomendado para empezar); directo a la tienda; solo archivo de instalación, sin tienda; no lo sé. Explica en una línea qué implica cada una con la tabla de etapas de `movil.md`.
+- **¿Qué necesita del teléfono?** Cámara, ubicación, notificaciones, lector de códigos, Bluetooth, huella o rostro. Cada permiso se justifica ante la tienda y ante el usuario.
+- **¿Debe funcionar sin internet?** Si sí: qué exactamente se puede consultar y qué se puede registrar sin conexión, y qué pasa cuando dos personas cambian lo mismo.
+- **¿Se conecta con un sistema que ya existe?** Sitio, base de datos, punto de venta, hoja de cálculo. ¿Quién tiene ese acceso?
+- **¿Habrá cobros dentro de la app?** ¿De productos físicos o servicios, o de contenido digital? Lo digital debe cobrarse con el sistema de la tienda, que cobra comisión.
+- **¿Quién administra los datos?** Casi toda app necesita además un panel web para el negocio. Pregúntalo: suele faltar en el pedido original.
+- **¿Quién publicará las actualizaciones después de la entrega?** Las tiendas exigen actualizar cada año.
 
 ## Qué guardar al terminar
 

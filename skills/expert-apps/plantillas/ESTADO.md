@@ -17,11 +17,13 @@
 |---|---|
 | Para quién | [Cliente: nombre / Proyecto propio] |
 | Qué es | [Página web / Aplicación web / App móvil] |
-| Ruta | [Exprés / Estándar / Completa] |
+| Funciones que definen la ruta | [Cuentas de usuario / Pagos / Datos delicados / Ninguna] |
+| Ruta | [Exprés / Estándar / Completa], porque [razón] |
 | Idioma del cliente | |
 | Idioma de los usuarios finales | |
 | Países donde opera | |
 | Dónde se publica | [Hosting, tipo y proveedor] |
+| Si es app: teléfonos e instalación | [Android / iPhone / ambos; archivo directo / tienda / por etapas] |
 | Nivel de seguridad | [Básico / Reforzado] |
 | Fecha comprometida | |
 
@@ -39,6 +41,14 @@
 | 7 | Seguridad | | |
 | 8 | Publicación | | |
 | 9 | Entrega | | |
+
+## Trámites en paralelo
+
+Lo que tarda días o semanas y conviene iniciar desde el arranque.
+
+| Trámite | A quién le toca | Estado |
+|---|---|---|
+| [Cuenta de desarrollador de la tienda / accesos a hosting y dominio / textos, fotos y logotipo] | | [Pendiente / Pedido el (fecha) / Listo] |
 
 ## Lo que pidió el cliente (con sus palabras)
 

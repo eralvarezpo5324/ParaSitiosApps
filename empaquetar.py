@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-empaquetar.py - Genera dist/experto.skill y dist/experto.zip a partir de skills/experto.
+empaquetar.py - Genera dist/expert-apps.skill y dist/expert-apps.zip a partir de skills/expert-apps.
 
 Los dos archivos tienen el mismo contenido. El .skill sirve para instalar con un
 clic desde la tarjeta del archivo; el .zip, para subirlo a mano en claude.ai.
@@ -20,7 +20,7 @@ import zipfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent
-SKILL = RAIZ / "skills" / "experto"
+SKILL = RAIZ / "skills" / "expert-apps"
 SALIDA = RAIZ / "dist"
 CARPETAS_EXCLUIDAS = {"__pycache__", "node_modules"}
 ARCHIVOS_EXCLUIDOS = {".DS_Store"}

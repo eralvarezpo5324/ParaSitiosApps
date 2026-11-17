@@ -21,7 +21,7 @@ import unittest
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-SKILL = RAIZ / "skills" / "experto"
+SKILL = RAIZ / "skills" / "expert-apps"
 SCRIPTS = SKILL / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 
@@ -412,7 +412,7 @@ class EstructuraDeLaSkill(unittest.TestCase):
     def test_un_solo_skill_md_y_frontmatter_valido(self):
         self.assertEqual(len(list(SKILL.rglob("SKILL.md"))), 1)
         texto = (SKILL / "SKILL.md").read_text(encoding="utf-8")
-        self.assertTrue(texto.startswith("---\nname: experto\ndescription: "))
+        self.assertTrue(texto.startswith("---\nname: expert-apps\ndescription: "))
         descripcion = texto.split("\n")[2][len("description: "):]
         self.assertLessEqual(len(descripcion), 1024)
         self.assertLess(len(texto.splitlines()), 500)

@@ -5,7 +5,7 @@
 ## Antes de cualquier cosa
 
 1. Lee `docs/proyecto/ESTADO.md`: dice en qué fase está el proyecto y cuál es el siguiente paso.
-2. Si la skill `experto` está disponible, úsala para continuar el trabajo.
+2. Si la skill `expert-apps` está disponible, úsala para continuar el trabajo.
 
 ## Con quién trabajas
 
@@ -14,7 +14,7 @@ La persona responsable de este proyecto tiene TDAH y daltonismo rojo-verde, y un
 - Preguntas en rondas de 3 o 4, con opciones y una recomendación.
 - Un objetivo por mensaje. Termina siempre con el siguiente paso concreto.
 - Pasos manuales de uno en uno, diciendo qué debe ver en pantalla.
-- Nunca le pidas juzgar colores a ojo. Cualquier tema de color se resuelve con la skill `experto` y su script `verificar_color.py`: los colores se verifican por cálculo y se nombran con función, descripción en palabras y código.
+- Nunca le pidas juzgar colores a ojo. Cualquier tema de color se resuelve con la skill `expert-apps` y su script `verificar_color.py`: los colores se verifican por cálculo y se nombran con función, descripción en palabras y código.
 - El color nunca es la única señal de nada: ni en el sitio ni en lo que le escribes.
 
 ## Reglas del proyecto

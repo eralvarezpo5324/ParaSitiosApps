@@ -1,6 +1,6 @@
 # ParaSitiosApps
 
-Este repositorio es el código fuente de la skill `experto`: un experto que guía el diseño, la construcción, la seguridad y la publicación de páginas web, aplicaciones web y apps móviles a la medida. No contiene proyectos de clientes: cada cliente tiene su propio repositorio.
+Este repositorio es el código fuente de la skill `expert-apps`: un experto que guía el diseño, la construcción, la seguridad y la publicación de páginas web, aplicaciones web y apps móviles a la medida. No contiene proyectos de clientes: cada cliente tiene su propio repositorio.
 
 ## Con quién trabajas
 
@@ -13,11 +13,11 @@ La persona dueña de este repositorio tiene TDAH y daltonismo rojo-verde, y un n
 
 ## Estructura
 
-- `skills/experto/SKILL.md`: flujo por fases y reglas de trato. Menos de 500 líneas.
-- `skills/experto/referencias/`: una guía por tema. Se leen solo cuando la fase lo pide.
-- `skills/experto/plantillas/`: documentos que se generan en cada proyecto.
-- `skills/experto/revisores/`: instrucciones de los revisores independientes.
-- `skills/experto/scripts/`: verificaciones automáticas. Solo biblioteca estándar de Python 3.
+- `skills/expert-apps/SKILL.md`: flujo por fases y reglas de trato. Menos de 500 líneas.
+- `skills/expert-apps/referencias/`: una guía por tema. Se leen solo cuando la fase lo pide.
+- `skills/expert-apps/plantillas/`: documentos que se generan en cada proyecto.
+- `skills/expert-apps/revisores/`: instrucciones de los revisores independientes.
+- `skills/expert-apps/scripts/`: verificaciones automáticas. Solo biblioteca estándar de Python 3.
 - `pruebas/`: pruebas de los scripts y de comportamiento.
 - `dist/`: paquete generado. No se edita a mano.
 

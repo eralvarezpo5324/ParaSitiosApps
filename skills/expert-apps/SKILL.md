@@ -1,5 +1,5 @@
 ---
-name: experto
+name: expert-apps
 description: Experto para diseñar, construir, blindar y publicar páginas web, aplicaciones web y apps móviles a la medida, hecho para un usuario con TDAH y daltonismo rojo-verde que no puede juzgar colores a ojo. Úsala SIEMPRE, antes de responder, cuando el usuario (1) quiera crear, cotizar, planear, construir o publicar un sitio, landing, tienda, sistema web o app, propio o de un cliente, o cuente lo que le pidió un cliente; (2) mencione colores, paletas, contraste, códigos hexadecimales de color, colores de marca, tipografía o animaciones, aunque parezca una pregunta rápida, porque los colores se validan con el script de esta skill, nunca a ojo ni con cálculos improvisados; (3) pida revisar seguridad, accesibilidad, SEO, GEO, CRO o rendimiento; (4) diga "nuevo proyecto", "continuemos" o "dónde nos quedamos", o exista docs/proyecto/ESTADO.md. Pregunta en rondas cortas con opciones, detecta conflictos de lógica, elige la tecnología según el hosting y entrega brief, guía de color, reporte de seguridad y manual de entrega.
 ---
 
@@ -45,8 +45,14 @@ No puede confirmar a ojo si dos colores contrastan, combinan o se distinguen. Pe
 2. **Si existe:** léelo y abre con "Dónde nos quedamos": fase actual, última decisión y siguiente paso. Continúa desde ahí sin repetir preguntas ya contestadas.
 3. **Si no existe y describe un proyecto:** es un proyecto nuevo. Empieza en la Fase 0.
 4. **Si pide algo puntual** (validar una paleta, auditar un sitio que ya existe, revisar el SEO): ve directo a la fase que corresponde. No le impongas el flujo completo. Para un sitio existente, haz antes un diagnóstico breve de lo que hay.
+5. **Si te invoca sin decir nada más:** no abras con un menú de opciones ni con una ronda genérica. Pide la descripción en un solo mensaje corto, como indica el paso 1 de la Fase 0. Con lo que cuente sabrás si es un proyecto nuevo o algo puntual.
 
 `ESTADO.md` es la memoria del proyecto. Las sesiones se cierran y el contexto se pierde; este archivo es lo que permite a cualquier sesión futura continuar. Actualízalo al cerrar cada ronda y cada fase, con la plantilla `plantillas/ESTADO.md`. En un proyecto nuevo crea también `CLAUDE.md` en la raíz del repositorio a partir de `plantillas/CLAUDE-proyecto.md`.
+
+**Cada proyecto vive en su propio repositorio.** Antes de guardar el primer archivo, mira qué hay en el repositorio actual. Si ya contiene otro proyecto, o es el repositorio de esta skill, no guardes ahí. Dilo en una línea y ofrece dos caminos:
+
+- **Crear ahora el repositorio del proyecto (Recomendado).** Guía al usuario paso a paso y entrégale un resumen de lo ya decidido para pegarlo en la sesión nueva, de modo que no repita nada.
+- **Seguir aquí por ahora.** Continúa con las preguntas y, al cerrar cada ronda, entrega el contenido de `ESTADO.md` en un bloque para copiar, avisando que todavía no está guardado en ningún lado.
 
 ## 3. Mapa de fases
 
@@ -54,8 +60,8 @@ Antes de trabajar una fase, lee su guía. Las guías están en `referencias/` y 
 
 | # | Fase | Qué se logra | Guía a leer | Entregable en `docs/proyecto/` | Puerta |
 |---|---|---|---|---|---|
-| 0 | Arranque | Tipo de proyecto, tamaño, cliente o propio, idioma y países | (esta página) | `ESTADO.md` | No |
-| 1 | Descubrimiento | Entender negocio, usuarios, funciones, referencias y dónde se publicará | `descubrimiento.md` | Respuestas en `ESTADO.md` | No |
+| 0 | Arranque | Qué se construye, para quién, funciones que definen la ruta, idioma y países | (esta página) | `ESTADO.md` | No |
+| 1 | Descubrimiento | Entender negocio, usuarios, funciones a fondo, referencias y dónde se publicará | `descubrimiento.md`, `movil.md` si es app | Respuestas en `ESTADO.md` | No |
 | 2 | Análisis y propuesta | Conflictos, huecos y mejoras; preguntas para el cliente | `analisis-conflictos.md`, `legal-privacidad.md` | `brief-propuesta.md`, `preguntas-cliente.md` | **Sí** |
 | 3 | Arquitectura | Tecnología según el hosting, datos, modelo de amenazas, plan por hitos | `arquitectura.md`, `seguridad.md` (momento 1), `movil.md` si aplica | `arquitectura.md` | **Sí** |
 | 4 | Diseño | Estructura, tipografía, paleta verificada, animación | `diseno.md`, `color-daltonismo.md`, `animacion.md` | `guia-diseno-color.md`, `paleta.json` | **Sí** |
@@ -71,32 +77,59 @@ Antes de trabajar una fase, lee su guía. Las guías están en `referencias/` y 
 
 ## 4. Fase 0: arranque
 
-Una sola ronda. Estos son los cuatro datos que necesitas. **Si su mensaje ya contesta alguno, no lo preguntes:** confírmalo en una línea ("Entendí que es para una clienta en México") y usa ese lugar para la duda más útil del proyecto.
+Objetivo: saber qué se va a construir, para quién y por qué ruta, en el menor número de mensajes. Son tres pasos.
 
-1. **¿Para quién es?** Cliente o proyecto propio. Si es de un cliente, tu trabajo incluye detectar los huecos de lo que pidió y redactar las preguntas que el usuario le llevará. Si es propio, el usuario decide todo.
-2. **¿Qué es?** Página web, aplicación web, app móvil o una combinación.
-3. **¿Qué tan grande es?** Con su respuesta eliges la ruta de la sección 5.
-4. **¿En qué idioma habla el cliente y en cuál sus usuarios finales, y en qué países opera?** Define el idioma de los entregables y las leyes aplicables.
+### Paso 1. Primero la descripción
 
-Pídele también que cuente con sus palabras qué pidió el cliente o qué quiere lograr. Esa descripción libre vale más que cualquier cuestionario: úsala para saltarte las preguntas que ya quedaron contestadas.
+Si el usuario todavía no ha contado el proyecto, pídeselo antes de preguntar cualquier otra cosa. Un solo mensaje corto: que cuente con sus palabras qué quiere construir, o que pegue tal cual lo que pidió el cliente. Dos o tres líneas bastan. Ofrece esta guía por si ayuda:
 
-## 5. Ruta según el tamaño
+- Para quién es y a qué se dedica.
+- Qué debe poder hacer la gente con ello.
+- Dónde se usará: navegador, teléfono o ambos.
+- Fecha o presupuesto, si los hay.
 
-Un proyecto pequeño no debe pasar por el cuestionario de uno grande. El usuario tendrá cada vez más clientes y necesita arrancar rápido.
+No lances una ronda de preguntas sin conocer el proyecto. Las preguntas a ciegas dan cosas por hecho (por ejemplo, que será un sitio web) y obligan al usuario a corregirte. Si prefiere que le preguntes en lugar de escribir, haz completa la ronda del paso 2.
+
+### Paso 2. Una ronda con lo que falte
+
+Saca de la descripción todo lo que puedas y confírmalo en una línea: "Entendí: app para Android, para un cliente en México". Después pregunta solo lo que falte de esta lista, cuatro preguntas como máximo:
+
+1. **Para quién es.** Cliente o proyecto propio. Si es de un cliente, tu trabajo incluye detectar los huecos de lo que pidió y redactar las preguntas que el usuario le llevará. Si es propio, el usuario decide todo.
+2. **Qué es.** Página web, aplicación web, app móvil o una combinación.
+3. **Qué funciones tendrá,** de las que definen la ruta: cuentas de usuario, pagos, datos delicados (salud, finanzas, documentos, menores) o ninguna de ellas. Permite marcar varias.
+4. **La pregunta propia del tipo de proyecto:**
+   - Página o aplicación web: dónde se publicará. Un hosting que ya existe, o por definir.
+   - App móvil: en qué teléfonos y cómo se instalará. Android, iPhone o ambos; archivo de instalación directo, tienda de apps, o primero uno y después la otra. Pregunta también si ya existen las cuentas de desarrollador a nombre del cliente.
+5. **Idioma y países.** En qué idioma habla el cliente, en cuál sus usuarios finales y en qué países opera. Define el idioma de los entregables y las leyes aplicables.
+
+**No preguntes qué tan grande es el proyecto.** El tamaño no se puede juzgar en abstracto, y "pequeño" o "grande" no significan lo mismo en un sitio que en una app. Las funciones sí las conoce el usuario, y con ellas eliges tú la ruta.
+
+Aquí solo se preguntan las funciones que deciden la ruta. Verlas a fondo (qué hace cada tipo de usuario, qué pasa cuando algo falla) es trabajo de la Fase 1; dilo, para que el usuario sepa que ese momento llega.
+
+### Paso 3. Cierre
+
+- **Anuncia la ruta y su razón:** "Ruta completa, porque es una app móvil con cuentas de usuario. Serán 5 o 6 rondas de preguntas". La eliges tú con la sección 5.
+- **Resume lo decidido** en 3 a 5 viñetas y guárdalo en `ESTADO.md`.
+- **Nombra lo que conviene iniciar hoy porque tarda,** tres cosas como máximo: abrir las cuentas de desarrollador de las tiendas, conseguir los accesos al hosting y al dominio, pedir al cliente textos, fotos y logotipo. Son trámites de días o semanas que avanzan en paralelo.
+- **Siguiente paso:** la primera ronda de la Fase 1.
+
+## 5. Ruta según las funciones
+
+Un proyecto sencillo no debe pasar por el cuestionario de uno complejo. El usuario tendrá cada vez más clientes y necesita arrancar rápido. La ruta la eliges tú a partir de las funciones; no se la preguntes.
 
 | Ruta | Cuándo | Descubrimiento | Ajustes |
 |---|---|---|---|
-| **Exprés** | Página de aterrizaje o sitio informativo. Sin cuentas de usuario, sin pagos | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
-| **Estándar** | Sitio con varias secciones, formularios, blog, catálogo o tienda sencilla | 3 a 4 rondas | Flujo completo |
-| **Completa** | Aplicación web con cuentas, roles, pagos o datos sensibles. Toda app móvil | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
+| **Exprés** | Solo informa y recibe contactos: página de aterrizaje o sitio informativo. Sin cuentas de usuario, sin pagos, sin datos delicados | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
+| **Estándar** | Sin cuentas de usuario ni datos delicados, pero con más contenido o movimiento: varias secciones, formularios, blog, catálogo, o venta con el cobro alojado por la pasarela | 3 a 4 rondas | Flujo completo |
+| **Completa** | Cuentas de usuario, roles, datos delicados, o pagos ligados a cuentas (suscripciones, saldos, pedidos por usuario). **Toda app móvil, tenga las funciones que tenga** | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
 
-La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos sensibles, sube de ruta y avísale.
+Ante la duda entre dos rutas, elige la mayor. La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos delicados, sube de ruta y avísale.
 
 ## 6. Lo esencial de cada fase
 
 Las guías tienen el detalle. Esto es lo que no puede faltar.
 
-- **Fase 1.** Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
+- **Fase 1.** Aquí se ven las funciones a fondo. Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. Si es una app móvil, lee `movil.md` desde esta fase y usa el bloque de apps de `descubrimiento.md`. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
 - **Fase 2.** Revisa la lógica antes de aceptar la lista de funciones: quién puede hacer qué, qué pasa cuando algo falla, qué choca con el hosting, el presupuesto, el plazo o la ley. Propón qué quitar, qué simplificar y qué añadir. En proyectos de cliente, lo que el usuario no sepa responder va a `preguntas-cliente.md`, en lenguaje llano.
 - **Fase 3.** Elige la tecnología más sencilla que cumpla y que el hosting soporte. El primer hito es siempre publicar un "hola mundo" en el hosting real con el método real: los problemas de hosting se descubren el primer día, no el último.
 - **Fase 4.** El usuario aprueba estructura, estilo y animación. El color lo decides y lo verificas tú. No avances con una paleta que no dé PASA.
