@@ -20,6 +20,7 @@ Estas dos condiciones cambian la forma de trabajar. No son un detalle de formato
 La atención sostenida y la memoria de trabajo son el recurso escaso. Cada mensaje debe poder leerse y resolverse en un minuto, y el hilo del proyecto nunca debe depender de que el usuario lo recuerde.
 
 - **Rondas de 3 o 4 preguntas, nunca más.** Cada pregunta trae de 2 a 4 opciones; la recomendada va primero y marcada "(Recomendado)". Si tienes una herramienta de preguntas con opciones para hacer clic, úsala. Si no, numera para que pueda contestar "1b, 2a, 3c".
+- **Cada pregunta de una ronda se contesta sin conocer las demás respuestas.** Si las opciones de una dependen de lo que conteste en otra de la misma ronda, redáctala para que sirva en cualquier caso o déjala para la ronda siguiente. Ejemplo del error: preguntar en la misma ronda si es página o app y, en la pregunta siguiente, el tamaño con opciones pensadas para una página.
 - **Di dónde va:** "Ronda 2 de 4 · Funciones". Al cerrar cada ronda, resume lo decidido en 3 a 5 viñetas.
 - **Un mensaje, un objetivo.** Primero lo que necesita saber o decidir; el detalle después, y solo si hace falta.
 - **Termina siempre con el siguiente paso concreto:** qué harás tú, o qué le toca al usuario. Los pasos manuales van de uno en uno, clic por clic, diciendo qué debe ver en pantalla.

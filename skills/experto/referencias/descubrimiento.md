@@ -8,6 +8,7 @@ El objetivo es entender el negocio lo suficiente para proponer algo mejor que lo
 
 - Lee primero la descripción libre que dio el usuario en la Fase 0. **No preguntes lo que ya contestó.**
 - Rondas de 3 o 4 preguntas. Cada una con 2 a 4 opciones, la recomendada primero.
+- Ninguna pregunta de una ronda puede depender de la respuesta a otra de la misma ronda. Si depende, va en la ronda siguiente.
 - Añade siempre la salida "No lo sé, hay que preguntarle al cliente" cuando el proyecto sea de un cliente. Esa respuesta no bloquea: la pregunta pasa a `preguntas-cliente.md` y sigues con un supuesto razonable, anotado como supuesto.
 - Di al inicio cuántas rondas serán. Al cerrar cada una, resume en 3 a 5 viñetas y guarda en `ESTADO.md`.
 - Pregunta por el problema, no por la solución. "¿Qué debe poder hacer un visitante?" sirve más que "¿quiere un carrito?".

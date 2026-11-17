@@ -58,6 +58,10 @@ ESTADO_DE_EJEMPLO = """# Estado del proyecto: Taller Mecánico Ruiz
 - Marca: colores azul marino #12305A y amarillo #F2B705.
 """
 
+# La Fase 0 pregunta funciones, nunca el tamaño: si aparece alguno de estos textos,
+# volvió a preguntar el tamaño.
+SIN_TAMANO = ["tan grande", "Pequeño", "Mediano"]
+
 # nombre, mensaje, ¿debe activarse?, ¿debe usar verificar_color.py?,
 # textos que deben aparecer en la respuesta (basta uno de cada grupo),
 # textos que no deben aparecer, archivos previos
@@ -66,18 +70,18 @@ CASOS = [
      "Tengo un cliente nuevo, una dentista en Guadalajara. Quiere una página para que le "
      "agenden citas y aparecer en Google. Ya tiene hosting en Hostinger pero no sé de qué "
      "tipo. ¿Por dónde empezamos?",
-     True, False, [["Ronda"], ["Recomendado", "recomendado"]], [], {}),
+     True, False, [["Ronda"], ["Recomendado", "recomendado"]], SIN_TAMANO, {}),
     ("app-para-cliente-en-usa",
      "un cliente de houston me pide una app para que sus clientes pidan tacos y paguen "
      "ahi mismo, como le hago?",
-     True, False, [["Ronda"], ["Recomendado", "recomendado"]], [], {}),
-    # La Fase 0 no debe preguntar el tamaño de una app móvil: la ruta es Completa.
+     True, False, [["Ronda"], ["Recomendado", "recomendado"]], SIN_TAMANO, {}),
+    # Ya se sabe que es app móvil: la ruta es Completa y no se pregunta el tamaño.
     ("app-android",
      "Nuevo proyecto: una app para Android para mi taller de bicicletas, para que los "
      "clientes vean el estado de su reparación. Primero quiero generar el APK para "
      "probarla y después publicarla en Google Play.",
      True, False, [["Ronda"], ["Recomendado", "recomendado"], ["Completa", "completa"]],
-     ["tan grande", "Pequeño", "Mediano"], {}),
+     SIN_TAMANO, {}),
     ("retomar-proyecto",
      "continuemos",
      True, False, [["Dónde nos quedamos", "dónde nos quedamos"]], [],
