@@ -1,6 +1,6 @@
 # Fase 1 · Descubrimiento
 
-Revisado: noviembre de 2026.
+Revisado: 17 de noviembre de 2026 (requisito de prueba cerrada de Google Play verificado en la ayuda de Play Console).
 
 El objetivo es entender el negocio lo suficiente para proponer algo mejor que lo que se pidió. Preguntar bien ahorra reconstruir después.
 
@@ -8,6 +8,7 @@ El objetivo es entender el negocio lo suficiente para proponer algo mejor que lo
 
 - Lee primero la descripción libre que dio el usuario en la Fase 0. **No preguntes lo que ya contestó.**
 - Rondas de 3 o 4 preguntas. Cada una con 2 a 4 opciones, la recomendada primero.
+- Ninguna pregunta de una ronda puede depender de la respuesta a otra de la misma ronda. Si depende, va en la ronda siguiente.
 - Añade siempre la salida "No lo sé, hay que preguntarle al cliente" cuando el proyecto sea de un cliente. Esa respuesta no bloquea: la pregunta pasa a `preguntas-cliente.md` y sigues con un supuesto razonable, anotado como supuesto.
 - Di al inicio cuántas rondas serán. Al cerrar cada una, resume en 3 a 5 viñetas y guarda en `ESTADO.md`.
 - Pregunta por el problema, no por la solución. "¿Qué debe poder hacer un visitante?" sirve más que "¿quiere un carrito?".
@@ -72,7 +73,7 @@ Parte de "¿qué debe poder hacer cada tipo de usuario?". Después profundiza se
 | Blog o noticias | ¿Quién escribe y cada cuánto? Si nadie lo hará, es mejor no incluirlo. |
 | Panel de administración | ¿Qué exactamente necesita cambiar el cliente sin ayuda? |
 | Notificaciones | ¿Por correo, WhatsApp, SMS o notificación en el celular? ¿Quién paga el envío? |
-| App móvil | ¿Qué necesita del teléfono que una página web no pueda dar? Cámara, notificaciones, uso sin conexión, presencia en la tienda de apps. |
+| App móvil | ¿Qué necesita del teléfono que una página web no pueda dar? Cámara, notificaciones, uso sin conexión, presencia en la tienda de apps. ¿Cómo llegará a los teléfonos? Ver bloque G. |
 | Chat | ¿Propio o enlace a WhatsApp? El enlace a WhatsApp resuelve casi siempre. |
 | Varios idiomas | ¿Quién traduce y quién mantiene las traducciones al día? |
 | Mapas, calendarios, facturación, CRM | ¿Con qué sistema exacto se conecta y quién tiene esa cuenta? |
@@ -111,7 +112,16 @@ No pases a la Fase 3 sin esto:
 - **¿Qué tipo de hosting es?** Opciones: compartido con cPanel; servidor propio o VPS con acceso completo; plataforma moderna; no lo sé. Si no lo sabe, guíalo paso a paso para averiguarlo con `despliegue.md`.
 - **¿Quién tiene los accesos?** Dominio, hosting, correo. ¿A nombre de quién están?
 - **¿El dominio ya existe?** ¿El correo del negocio usa ese dominio? Mover el sitio sin cuidado puede tirar el correo.
-- Para apps: ¿existen ya las cuentas de desarrollador de Apple y de Google, y a nombre de quién?
+
+**Para apps móviles**, además (el dominio sigue importando: la política de privacidad y la página para borrar la cuenta van en la web):
+- **¿Cómo llegará a los teléfonos?** Va primero, en la Fase 0 si ya sabías que era app.
+  a) Android: primero un APK de prueba y después Google Play (Recomendado: se prueba en teléfonos reales desde el primer hito y después llega a cualquiera)
+  b) Android y iPhone, por Google Play y App Store
+  c) Solo un APK instalado directo en teléfonos conocidos, sin tienda (uso interno)
+  d) No lo sé, recomiéndame
+- **¿Existe ya la cuenta de desarrollador de Google Play? ¿Es personal o de empresa, y a nombre de quién?** Si es personal y se creó después del 13 de noviembre de 2023, o aún no existe y será personal, la publicación espera una prueba cerrada de 14 días con al menos 12 personas (`movil.md`, sección 8). Dilo ya: cambia el plazo.
+- **¿Quién reunirá a las personas de la prueba cerrada?** Más de 12, cada una con teléfono Android y cuenta de Google, dispuestas a usar la app dos semanas.
+- Si también va a iPhone: ¿existe la cuenta de Apple, y a nombre de quién?
 
 ### H. Datos, pagos y legal
 - ¿Qué datos de personas se van a guardar? Nombre, correo, teléfono, dirección, documentos, pagos.
@@ -131,10 +141,9 @@ No pases a la Fase 3 sin esto:
 - ¿Cuál es el número hoy? Sin punto de partida no se puede demostrar la mejora.
 
 ### K. Apps móviles
-Lee `movil.md` antes de esta ronda. Lo que ya se respondió en la Fase 0 (teléfonos, forma de instalación, cuentas de desarrollador) no se vuelve a preguntar.
+Lee `movil.md` antes de esta ronda. La forma de llegar a los teléfonos y las cuentas de desarrollador se preguntan en el bloque G; lo que ya se respondió en la Fase 0 no se repite.
 
 - **¿Quién la va a usar?** Opciones: público en general; clientes del negocio; solo empleados. Si es solo para empleados, existen vías de distribución privada que evitan la tienda pública.
-- **¿Cómo llegará a los teléfonos?** Opciones: primero un archivo de instalación para probar y después la tienda (Recomendado para empezar); directo a la tienda; solo archivo de instalación, sin tienda; no lo sé. Explica en una línea qué implica cada una con la tabla de etapas de `movil.md`.
 - **¿Qué necesita del teléfono?** Cámara, ubicación, notificaciones, lector de códigos, Bluetooth, huella o rostro. Cada permiso se justifica ante la tienda y ante el usuario.
 - **¿Debe funcionar sin internet?** Si sí: qué exactamente se puede consultar y qué se puede registrar sin conexión, y qué pasa cuando dos personas cambian lo mismo.
 - **¿Se conecta con un sistema que ya existe?** Sitio, base de datos, punto de venta, hoja de cálculo. ¿Quién tiene ese acceso?

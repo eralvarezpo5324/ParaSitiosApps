@@ -401,7 +401,8 @@ class EstructuraDeLaSkill(unittest.TestCase):
                         "paleta-verificada.html", "CLAUDE.md", "llms.txt", "robots.txt",
                         "sitemap.xml", "hooks.json", "manifest.json", "sftp.json",
                         "sftp-config.json", "installed.json", "package.json",
-                        "composer.json", "package-lock.json", "guia-color.md"}
+                        "composer.json", "package-lock.json", "guia-color.md",
+                        "eas.json"}
         for guia in list((SKILL / "referencias").glob("*.md")) + list((SKILL / "revisores").glob("*.md")):
             texto = guia.read_text(encoding="utf-8")
             for nombre in set(re.findall(r"`(?:[\w/-]+/)?([\w-]+\.(?:md|py|json))`", texto)):
@@ -421,6 +422,81 @@ class EstructuraDeLaSkill(unittest.TestCase):
         cabecera = (SKILL / "SKILL.md").read_text(encoding="utf-8").split("---")[1]
         self.assertNotIn("model:", cabecera)
         self.assertNotIn("effort:", cabecera)
+
+
+class EvaluacionConModelo(unittest.TestCase):
+    """La revisión de respuestas de probar_con_modelo.py, sin llamar a ningún modelo."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(RAIZ / "pruebas"))
+        import probar_con_modelo
+        cls.pcm = probar_con_modelo
+        cls.casos = {c["nombre"]: c for c in probar_con_modelo.CASOS}
+        cls.app = cls.casos["app-android-por-etapas"]
+
+    @staticmethod
+    def salida(respuesta, activada=True):
+        eventos = [{"type": "system", "subtype": "init", "model": "modelo-de-prueba"}]
+        if activada:
+            eventos.append({"type": "assistant", "message": {"content": [
+                {"type": "tool_use", "name": "Skill", "input": {"skill": "expert-apps"}}]}})
+        eventos.append({"type": "result", "result": respuesta})
+        return "\n".join(json.dumps(e) for e in eventos)
+
+    def test_todos_los_casos_tienen_la_misma_forma(self):
+        permitidas = {"nombre", "mensaje", "activa", "script_de_color", "debe", "no_debe", "archivos"}
+        self.assertEqual(len(self.casos), len(self.pcm.CASOS), "hay nombres de caso repetidos")
+        for caso in self.pcm.CASOS:
+            self.assertLessEqual(set(caso), permitidas, caso["nombre"])
+            self.assertIsInstance(caso["activa"], bool, caso["nombre"])
+            for grupo in caso.get("debe", []):
+                self.assertIsInstance(grupo, list, caso["nombre"])
+            self.assertIsInstance(caso.get("no_debe", []), list, caso["nombre"])
+
+    def test_app_android_pasa_si_confirma_la_ruta_completa(self):
+        respuesta = ("Ronda 1 de 1 · Arranque. Va por la ruta Completa, como toda app móvil.\n"
+                     "1. ¿La cuenta de Google Play es personal o de empresa?\n"
+                     "   a) De empresa (Recomendado)")
+        paso, problemas, modelo, texto = self.pcm.evaluar(self.salida(respuesta), self.app)
+        self.assertTrue(paso, problemas)
+        self.assertEqual(modelo, "modelo-de-prueba")
+        self.assertEqual(texto, respuesta)
+
+    def test_app_android_falla_si_pregunta_el_tamano(self):
+        respuesta = ("Ronda 1 de 1 · Arranque\n3. ¿Qué tan grande es?\n"
+                     "   a) Pequeño (Recomendado)\n   b) Mediano\n   c) Grande: ruta completa")
+        paso, problemas, *_ = self.pcm.evaluar(self.salida(respuesta), self.app)
+        self.assertFalse(paso)
+        self.assertTrue(any("tan grande" in p for p in problemas), problemas)
+
+    def test_detecta_que_la_skill_no_se_activo(self):
+        respuesta = "Ronda 1. Ruta Completa (Recomendado). Google Play."
+        paso, problemas, *_ = self.pcm.evaluar(self.salida(respuesta, activada=False), self.app)
+        self.assertFalse(paso)
+        self.assertIn("la skill no se activó", problemas)
+
+    def test_detecta_una_pregunta_que_depende_de_otra_de_la_misma_ronda(self):
+        # El error real: en la misma ronda se pregunta qué es el proyecto y,
+        # enseguida, algo con opciones que solo valen para un sitio web.
+        caso = self.casos["prefiere-preguntas"]
+        mala = ("Ronda 1 de 1\n1. ¿Qué es? a) Página web b) App móvil\n"
+                "2. ¿Qué hosting tiene? a) Compartido con cPanel b) VPS")
+        paso, problemas, *_ = self.pcm.evaluar(self.salida(mala), caso)
+        self.assertFalse(paso)
+        self.assertTrue(any("cPanel" in p for p in problemas), problemas)
+        buena = ("Ronda 1 de 2\n1. ¿Para quién es? a) Cliente b) Propio\n"
+                 "2. ¿Qué es? a) Página web b) Aplicación web c) App móvil\n"
+                 "3. ¿Qué funciones tendrá? a) Cuentas de usuario b) Pagos c) Ninguna")
+        paso, problemas, *_ = self.pcm.evaluar(self.salida(buena), caso)
+        self.assertTrue(paso, problemas)
+
+    def test_sin_descripcion_exige_pedirla_antes_de_preguntar(self):
+        caso = self.casos["sin-descripcion"]
+        buena = "Fase 0 de 9. Cuéntame el proyecto en dos o tres líneas, con tus palabras."
+        self.assertTrue(self.pcm.evaluar(self.salida(buena), caso)[0])
+        mala = "Ronda 1 de 1\n1. ¿Para quién es?\n2. ¿Qué es?"
+        self.assertFalse(self.pcm.evaluar(self.salida(mala), caso)[0])
 
 
 if __name__ == "__main__":

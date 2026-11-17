@@ -12,11 +12,16 @@ Uso, desde la raíz del repositorio:
     python3 pruebas/probar_con_modelo.py                    # modelo por defecto
     python3 pruebas/probar_con_modelo.py --modelo NOMBRE    # un modelo concreto
     python3 pruebas/probar_con_modelo.py --solo sin-descripcion,app-android-por-etapas
+    python3 pruebas/probar_con_modelo.py --solo proyecto-nuevo --mostrar
 
 Cada caso se ejecuta en una carpeta temporal con la skill instalada. Se revisa:
   - que la skill se active cuando debe y no se active cuando no debe;
   - que use los scripts en lugar de calcular a mano;
-  - que la respuesta contenga lo esencial del comportamiento esperado.
+  - que la respuesta contenga lo esencial del comportamiento esperado y no
+    contenga lo que delata un error conocido.
+
+La revisión de cada respuesta (función `evaluar`) tiene sus propias pruebas en
+test_scripts.py, que no llaman a ningún modelo.
 
 Solo usa la biblioteca estándar de Python 3 y el comando `claude`.
 Código de salida: 0 si todo pasa, 1 si algo falla.
@@ -57,34 +62,54 @@ ESTADO_DE_EJEMPLO = """# Estado del proyecto: Taller Mecánico Ruiz
 - Marca: colores azul marino #12305A y amarillo #F2B705.
 """
 
-# Cada caso indica: el mensaje, si la skill debe activarse, si debe usar
-# verificar_color.py, textos que deben aparecer (basta uno de cada grupo),
-# textos que no deben aparecer, y archivos que existen antes de empezar.
-SIN_PREGUNTA_DE_TAMANO = ["tan grande", "Tamaño del proyecto", "¿Qué tamaño"]
+# La Fase 0 pregunta funciones, nunca el tamaño. Si aparece alguno de estos
+# textos, volvió a preguntar el tamaño.
+SIN_TAMANO = ["tan grande", "Pequeño", "Mediano", "Tamaño del proyecto"]
+# Opciones que solo tienen sentido cuando ya se sabe si es sitio o app. Si salen
+# en una ronda donde todavía se pregunta qué es el proyecto, una pregunta está
+# dando por hecha la respuesta a otra de la misma ronda.
+DEPENDEN_DEL_TIPO = ["cPanel", "APK"]
 PIDE_DESCRIPCION = ["con tus palabras", "tal cual", "Cuéntame", "cuéntame", "Cuéntamelo"]
 
+# Cada caso indica:
+#   nombre, mensaje   identificador y lo que escribe el usuario
+#   activa            si la skill debe activarse
+#   script_de_color   si debe ejecutar verificar_color.py (opcional)
+#   debe              textos que deben aparecer; basta uno de cada grupo (opcional)
+#   no_debe           textos que no deben aparecer (opcional)
+#   archivos          archivos que existen antes de empezar (opcional)
 CASOS = [
     {"nombre": "proyecto-nuevo",
      "mensaje": "Tengo un cliente nuevo, una dentista en Guadalajara. Quiere una página para "
                 "que le agenden citas y aparecer en Google. Ya tiene hosting en Hostinger pero "
                 "no sé de qué tipo. ¿Por dónde empezamos?",
      "activa": True, "debe": [["Ronda"], ["Recomendado", "recomendado"]],
-     "no_debe": SIN_PREGUNTA_DE_TAMANO},
+     "no_debe": SIN_TAMANO},
+    # Sin descripción: primero la pide, no lanza una ronda a ciegas.
     {"nombre": "sin-descripcion",
      "mensaje": "quiero empezar un proyecto nuevo con un cliente",
      "activa": True, "debe": [PIDE_DESCRIPCION],
-     "no_debe": SIN_PREGUNTA_DE_TAMANO + ["Ronda 1"]},
+     "no_debe": SIN_TAMANO + ["Ronda 1"]},
+    # Prefiere que le pregunten: la ronda no puede traer preguntas que dependan
+    # de la respuesta a "¿qué es?", que va en esa misma ronda.
+    {"nombre": "prefiere-preguntas",
+     "mensaje": "quiero empezar un proyecto nuevo con un cliente, pero mejor ve "
+                "preguntándome tú en lugar de que yo te lo describa",
+     "activa": True, "debe": [["Ronda"]],
+     "no_debe": SIN_TAMANO + DEPENDEN_DEL_TIPO},
+    # Ya se sabe que es app móvil: la ruta es Completa y no se pregunta el tamaño.
     {"nombre": "app-android-por-etapas",
      "mensaje": "Un cliente me pidió una app para Android. Primero quiere el APK para "
                 "instalarlo directo en los teléfonos de sus repartidores y después subirla a "
                 "Google Play. Es para registrar entregas con foto y firma.",
-     "activa": True, "debe": [["Ronda"], ["desarrollador", "Google Play"]],
-     "no_debe": SIN_PREGUNTA_DE_TAMANO},
+     "activa": True,
+     "debe": [["Ronda"], ["desarrollador", "Google Play"], ["Completa", "completa"]],
+     "no_debe": SIN_TAMANO},
     {"nombre": "app-para-cliente-en-usa",
      "mensaje": "un cliente de houston me pide una app para que sus clientes pidan tacos y "
                 "paguen ahi mismo, como le hago?",
      "activa": True, "debe": [["Ronda"], ["Recomendado", "recomendado"]],
-     "no_debe": SIN_PREGUNTA_DE_TAMANO},
+     "no_debe": SIN_TAMANO},
     {"nombre": "retomar-proyecto",
      "mensaje": "continuemos",
      "activa": True, "debe": [["Dónde nos quedamos", "dónde nos quedamos"]],
@@ -113,22 +138,61 @@ CASOS = [
 ]
 
 
+def evaluar(salida, caso):
+    """Revisa la salida stream-json de `claude` contra lo que espera el caso.
+
+    Devuelve (paso, problemas, modelo_real, respuesta).
+    """
+    activada = uso_script = False
+    respuesta, modelo_real = "", None
+    for linea in salida.splitlines():
+        try:
+            evento = json.loads(linea)
+        except json.JSONDecodeError:
+            continue
+        if evento.get("type") == "system" and evento.get("subtype") == "init":
+            modelo_real = evento.get("model")
+        elif evento.get("type") == "assistant":
+            for parte in evento["message"]["content"]:
+                if parte.get("type") != "tool_use":
+                    continue
+                if parte["name"] == "Skill":
+                    activada = True
+                if parte["name"] == "Bash" and "verificar_color.py" in json.dumps(parte["input"]):
+                    uso_script = True
+        elif evento.get("type") == "result":
+            respuesta = evento.get("result") or ""
+
+    problemas = []
+    if not respuesta:
+        problemas.append("no hubo respuesta")
+    if activada != caso["activa"]:
+        problemas.append("la skill no se activó" if caso["activa"]
+                         else "la skill se activó sin deber")
+    if caso.get("script_de_color") and not uso_script:
+        problemas.append("no usó verificar_color.py")
+    for grupo in caso.get("debe", []):
+        if not any(texto in respuesta for texto in grupo):
+            problemas.append(f'la respuesta no contiene "{grupo[0]}"')
+    for texto in caso.get("no_debe", []):
+        if texto in respuesta:
+            problemas.append(f'la respuesta contiene "{texto}" y no debería')
+    return not problemas, problemas, modelo_real, respuesta
+
+
 def ejecutar_caso(caso, modelo, limite):
-    nombre, mensaje, debe_activarse = caso["nombre"], caso["mensaje"], caso["activa"]
-    debe_usar_script = caso.get("script_de_color", False)
-    textos, prohibidos = caso.get("debe", []), caso.get("no_debe", [])
-    archivos = caso.get("archivos", {})
+    nombre = caso["nombre"]
     carpeta = Path(tempfile.mkdtemp(prefix=f"experto-{nombre}-"))
     try:
         destino = carpeta / ".claude" / "skills" / SKILL.name
         shutil.copytree(SKILL, destino, ignore=shutil.ignore_patterns("__pycache__"))
-        for ruta, contenido in archivos.items():
+        for ruta, contenido in caso.get("archivos", {}).items():
             archivo = carpeta / ruta
             archivo.parent.mkdir(parents=True, exist_ok=True)
             archivo.write_text(contenido, encoding="utf-8")
         subprocess.run(["git", "init", "-q", str(carpeta)], capture_output=True)
 
-        comando = ["claude", "-p", mensaje, "--max-turns", "16",
+        comando = ["claude", "-p", caso["mensaje"], "--max-turns", "16",
                    "--output-format", "stream-json", "--verbose",
                    "--allowedTools", "Bash,Read,Write,Edit,Glob,Grep,Skill"]
         if modelo:
@@ -139,41 +203,7 @@ def ejecutar_caso(caso, modelo, limite):
         except subprocess.TimeoutExpired:
             return nombre, False, ["se agotó el tiempo"], None, ""
 
-        activada = uso_script = False
-        respuesta, modelo_real = "", None
-        for linea in salida.splitlines():
-            try:
-                evento = json.loads(linea)
-            except json.JSONDecodeError:
-                continue
-            if evento.get("type") == "system" and evento.get("subtype") == "init":
-                modelo_real = evento.get("model")
-            elif evento.get("type") == "assistant":
-                for parte in evento["message"]["content"]:
-                    if parte.get("type") != "tool_use":
-                        continue
-                    if parte["name"] == "Skill":
-                        activada = True
-                    if parte["name"] == "Bash" and "verificar_color.py" in json.dumps(parte["input"]):
-                        uso_script = True
-            elif evento.get("type") == "result":
-                respuesta = evento.get("result") or ""
-
-        problemas = []
-        if not respuesta:
-            problemas.append("no hubo respuesta")
-        if activada != debe_activarse:
-            problemas.append("la skill no se activó" if debe_activarse
-                             else "la skill se activó sin deber")
-        if debe_usar_script and not uso_script:
-            problemas.append("no usó verificar_color.py")
-        for grupo in textos:
-            if not any(texto in respuesta for texto in grupo):
-                problemas.append(f'la respuesta no contiene "{grupo[0]}"')
-        for texto in prohibidos:
-            if texto in respuesta:
-                problemas.append(f'la respuesta contiene "{texto}", que no debería')
-        return nombre, not problemas, problemas, modelo_real, respuesta
+        return (nombre, *evaluar(salida, caso))
     finally:
         shutil.rmtree(carpeta, ignore_errors=True)
 

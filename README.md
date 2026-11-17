@@ -79,9 +79,9 @@ El experto se detiene a pedir tu aprobación solo en las fases marcadas. Entre e
 | 8 | Publicación | Sitio en línea y verificado | Sí |
 | 9 | Entrega | Manual, accesos y mantenimiento | |
 
-El experto elige el recorrido según las funciones, no te pregunta el tamaño. Una página que solo informa recorre una versión corta. Un proyecto con cuentas de usuario, pagos o datos delicados, y cualquier app móvil, recorre la completa con seguridad reforzada.
+El experto elige el recorrido según las funciones, no te pregunta el tamaño. Una página que solo informa recorre una versión corta. Un proyecto con cuentas de usuario, pagos o datos sensibles, y cualquier app móvil, recorre la completa con seguridad reforzada.
 
-En el arranque, lo primero que te pide es que cuentes el proyecto con tus palabras o pegues lo que pidió el cliente. Después pregunta solo lo que falte.
+En el arranque, lo primero que te pide es que cuentes el proyecto con tus palabras o pegues lo que pidió el cliente. Después pregunta solo lo que falte. Nunca pone en el mismo bloque una pregunta que dependa de la respuesta de otra: esa espera a la ronda siguiente.
 
 ---
 
@@ -142,7 +142,7 @@ La skill no fija ningún modelo. Para comprobar que se comporta igual con uno nu
 python3 pruebas/probar_con_modelo.py --modelo NOMBRE-DEL-MODELO
 ```
 
-Lanza ocho conversaciones de prueba y responde PASA o FALLA en cada una. Consume uso de tu cuenta.
+Lanza varias conversaciones de prueba y responde PASA o FALLA en cada una. Consume uso de tu cuenta.
 
 ---
 

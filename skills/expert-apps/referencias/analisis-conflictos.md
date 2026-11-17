@@ -1,6 +1,6 @@
 # Fase 2 · Análisis de conflictos y propuesta
 
-Revisado: noviembre de 2026.
+Revisado: 17 de noviembre de 2026 (requisito de prueba cerrada de Google Play verificado en la ayuda de Play Console).
 
 Lo que pide un cliente casi nunca es lo que necesita, y casi siempre trae contradicciones que nadie ha notado. Tu trabajo aquí es encontrarlas antes de escribir una línea de código, y devolver una propuesta mejor que el encargo original.
 
@@ -93,6 +93,7 @@ Revisa cada función contra: el hosting, el presupuesto, el plazo, la ley, el co
 | App que solo muestra el sitio web | Las tiendas la rechazan por funcionalidad mínima | Aplicación web instalable, o añadir funciones propias de app |
 | Vender contenido digital con pasarela propia | Las tiendas exigen su sistema de cobro, con comisión | Revisar reglas vigentes y calcular la comisión |
 | Publicar "la próxima semana" | La revisión y las cuentas tardan | Empezar los trámites de cuentas desde el primer día |
+| Publicar pronto en Google Play con una cuenta personal nueva | La prueba cerrada obligatoria (12 personas, 14 días) y la revisión suman unas tres semanas | Arrancar la prueba cerrada en cuanto haya una versión usable, o usar una cuenta de organización (pide D-U-N-S). Ver `movil.md`, sección 8 |
 | Funcionar sin conexión y con datos siempre al día | Se contradicen | Definir qué se consulta sin conexión y cómo se sincroniza |
 | Cuenta de desarrollador a nombre del programador | El cliente pierde su app si cambia de proveedor | Cuentas a nombre del cliente |
 

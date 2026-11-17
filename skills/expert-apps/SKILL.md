@@ -20,6 +20,7 @@ Estas dos condiciones cambian la forma de trabajar. No son un detalle de formato
 La atención sostenida y la memoria de trabajo son el recurso escaso. Cada mensaje debe poder leerse y resolverse en un minuto, y el hilo del proyecto nunca debe depender de que el usuario lo recuerde.
 
 - **Rondas de 3 o 4 preguntas, nunca más.** Cada pregunta trae de 2 a 4 opciones; la recomendada va primero y marcada "(Recomendado)". Si tienes una herramienta de preguntas con opciones para hacer clic, úsala. Si no, numera para que pueda contestar "1b, 2a, 3c".
+- **Cada pregunta de una ronda se contesta sin conocer las demás respuestas.** Las preguntas de una ronda llegan todas juntas, así que ninguna puede dar por hecho lo que se conteste en otra. Si las opciones de una dependen de otra de la misma ronda, redáctala para que sirva en cualquier caso o déjala para la ronda siguiente. Ejemplo del error: preguntar en la misma ronda si es página o app y, en la pregunta siguiente, el tamaño con opciones pensadas para una página.
 - **Di dónde va:** "Ronda 2 de 4 · Funciones". Al cerrar cada ronda, resume lo decidido en 3 a 5 viñetas.
 - **Un mensaje, un objetivo.** Primero lo que necesita saber o decidir; el detalle después, y solo si hace falta.
 - **Termina siempre con el siguiente paso concreto:** qué harás tú, o qué le toca al usuario. Los pasos manuales van de uno en uno, clic por clic, diciendo qué debe ver en pantalla.
@@ -62,10 +63,10 @@ Antes de trabajar una fase, lee su guía. Las guías están en `referencias/` y 
 |---|---|---|---|---|---|
 | 0 | Arranque | Qué se construye, para quién, funciones que definen la ruta, idioma y países | (esta página) | `ESTADO.md` | No |
 | 1 | Descubrimiento | Entender negocio, usuarios, funciones a fondo, referencias y dónde se publicará | `descubrimiento.md`, `movil.md` si es app | Respuestas en `ESTADO.md` | No |
-| 2 | Análisis y propuesta | Conflictos, huecos y mejoras; preguntas para el cliente | `analisis-conflictos.md`, `legal-privacidad.md` | `brief-propuesta.md`, `preguntas-cliente.md` | **Sí** |
+| 2 | Análisis y propuesta | Conflictos, huecos y mejoras; preguntas para el cliente | `analisis-conflictos.md`, `legal-privacidad.md`, `movil.md` si es app | `brief-propuesta.md`, `preguntas-cliente.md` | **Sí** |
 | 3 | Arquitectura | Tecnología según el hosting, datos, modelo de amenazas, plan por hitos | `arquitectura.md`, `seguridad.md` (momento 1), `movil.md` si aplica | `arquitectura.md` | **Sí** |
 | 4 | Diseño | Estructura, tipografía, paleta verificada, animación | `diseno.md`, `color-daltonismo.md`, `animacion.md` | `guia-diseno-color.md`, `paleta.json` | **Sí** |
-| 5 | Construcción | Cada hito funcionando y probado | `funcionalidad.md`, `seguridad.md` (momento 2) | Código y una prueba guiada por hito | **Sí**, al terminar |
+| 5 | Construcción | Cada hito funcionando y probado | `funcionalidad.md`, `seguridad.md` (momento 2), `movil.md` si es app | Código y una prueba guiada por hito | **Sí**, al terminar |
 | 6 | Optimización | Rendimiento, SEO, GEO, CRO y accesibilidad | `rendimiento.md`, `seo-geo-cro.md` | Mediciones en `ESTADO.md` | No |
 | 7 | Seguridad | Auditoría como experto en ciberseguridad | `seguridad.md` (momento 3) | `reporte-seguridad.md` | **Sí** |
 | 8 | Publicación | Sitio o app en producción y verificado en vivo | `despliegue.md`, `movil.md` si aplica | Revisión externa en el reporte | **Sí**, antes de publicar |
@@ -88,7 +89,7 @@ Si el usuario todavía no ha contado el proyecto, pídeselo antes de preguntar c
 - Dónde se usará: navegador, teléfono o ambos.
 - Fecha o presupuesto, si los hay.
 
-No lances una ronda de preguntas sin conocer el proyecto. Las preguntas a ciegas dan cosas por hecho (por ejemplo, que será un sitio web) y obligan al usuario a corregirte. Si prefiere que le preguntes en lugar de escribir, haz completa la ronda del paso 2.
+No lances una ronda de preguntas sin conocer el proyecto. Las preguntas a ciegas dan cosas por hecho (por ejemplo, que será un sitio web) y obligan al usuario a corregirte. Si prefiere que le preguntes en lugar de escribir, haz la ronda del paso 2 con sus preguntas 1 a 4.
 
 ### Paso 2. Una ronda con lo que falte
 
@@ -96,13 +97,17 @@ Saca de la descripción todo lo que puedas y confírmalo en una línea: "Entend�
 
 1. **Para quién es.** Cliente o proyecto propio. Si es de un cliente, tu trabajo incluye detectar los huecos de lo que pidió y redactar las preguntas que el usuario le llevará. Si es propio, el usuario decide todo.
 2. **Qué es.** Página web, aplicación web, app móvil o una combinación.
-3. **Qué funciones tendrá,** de las que definen la ruta: cuentas de usuario, pagos, datos delicados (salud, finanzas, documentos, menores) o ninguna de ellas. Permite marcar varias.
-4. **La pregunta propia del tipo de proyecto:**
+3. **Qué funciones tendrá,** de las que definen la ruta: cuentas de usuario; pagos o cobros en línea; datos sensibles (salud, finanzas, documentos personales, menores); o ninguna, solo informar y recibir contactos. Permite marcar varias. Está redactada para servir igual a un sitio que a una app.
+4. **Idioma y países.** En qué idioma habla el cliente, en cuál sus usuarios finales y en qué países opera. Define el idioma de los entregables y las leyes aplicables.
+5. **La pregunta propia del tipo de proyecto. Solo cuando ya sabes qué es:**
    - Página o aplicación web: dónde se publicará. Un hosting que ya existe, o por definir.
-   - App móvil: en qué teléfonos y cómo se instalará. Android, iPhone o ambos; archivo de instalación directo, tienda de apps, o primero uno y después la otra. Pregunta también si ya existen las cuentas de desarrollador a nombre del cliente.
-5. **Idioma y países.** En qué idioma habla el cliente, en cuál sus usuarios finales y en qué países opera. Define el idioma de los entregables y las leyes aplicables.
+   - App móvil: en qué teléfonos y cómo se instalará. Android, iPhone o ambos; archivo de instalación directo, tienda de apps, o primero uno y después la otra. Si eso ya lo dijo, pregunta si la cuenta de desarrollador ya existe y si es personal o de empresa, porque cambia el plazo de publicación.
+
+**Aplica aquí la regla de las rondas: ninguna pregunta da por hecha la respuesta a otra de la misma ronda.** Si todavía no sabes qué es el proyecto, la ronda lleva solo las preguntas 1 a 4, que sirven para cualquier tipo. La pregunta 5 espera a que el usuario conteste: va sola después, o abre la Fase 1. Este fue un error real: preguntar en el mismo bloque "¿qué es?" y enseguida otra cosa con opciones pensadas para un sitio web.
 
 **No preguntes qué tan grande es el proyecto.** El tamaño no se puede juzgar en abstracto, y "pequeño" o "grande" no significan lo mismo en un sitio que en una app. Las funciones sí las conoce el usuario, y con ellas eliges tú la ruta.
+
+En una app móvil la ruta ya es Completa, conteste lo que conteste. Dilo desde el primer mensaje, en una línea: "Va por la ruta Completa, como toda app móvil". Pregunta igual las funciones: definen el nivel de seguridad y lo que exigirá la tienda.
 
 Aquí solo se preguntan las funciones que deciden la ruta. Verlas a fondo (qué hace cada tipo de usuario, qué pasa cuando algo falla) es trabajo de la Fase 1; dilo, para que el usuario sepa que ese momento llega.
 
@@ -115,23 +120,23 @@ Aquí solo se preguntan las funciones que deciden la ruta. Verlas a fondo (qué 
 
 ## 5. Ruta según las funciones
 
-Un proyecto sencillo no debe pasar por el cuestionario de uno complejo. El usuario tendrá cada vez más clientes y necesita arrancar rápido. La ruta la eliges tú a partir de las funciones; no se la preguntes.
+Un proyecto sencillo no debe pasar por el cuestionario de uno complejo. El usuario tendrá cada vez más clientes y necesita arrancar rápido. La ruta la eliges tú a partir de las funciones; no se la preguntes. **La decide la función de mayor riesgo, no el número de páginas:** una sola página con inicio de sesión va por la ruta Completa.
 
-| Ruta | Cuándo | Descubrimiento | Ajustes |
-|---|---|---|---|
-| **Exprés** | Solo informa y recibe contactos: página de aterrizaje o sitio informativo. Sin cuentas de usuario, sin pagos, sin datos delicados | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
-| **Estándar** | Sin cuentas de usuario ni datos delicados, pero con más contenido o movimiento: varias secciones, formularios, blog, catálogo, o venta con el cobro alojado por la pasarela | 3 a 4 rondas | Flujo completo |
-| **Completa** | Cuentas de usuario, roles, datos delicados, o pagos ligados a cuentas (suscripciones, saldos, pedidos por usuario). **Toda app móvil, tenga las funciones que tenga** | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
+| Ruta | Funciones | Ejemplos | Descubrimiento | Ajustes |
+|---|---|---|---|---|
+| **Exprés** | Solo muestra información y recibe contactos: WhatsApp, llamada o un formulario que envía un correo. Sin cuentas de usuario, sin pagos, sin datos sensibles | Página de aterrizaje, sitio informativo | 2 rondas | Fases 2 y 3 con una sola puerta. Fases 6 y 7 en un solo bloque |
+| **Estándar** | Contenido que se actualiza o que guarda datos, sin cuentas de usuario: blog, catálogo, citas, formularios que guardan datos, panel para editar contenido, o un cobro que se hace en la página de la pasarela | Sitio de varias secciones, catálogo, tienda sencilla | 3 a 4 rondas | Flujo completo |
+| **Completa** | Cualquiera de estas: cuentas de usuario o roles; pagos dentro del propio sistema (pedidos ligados a una cuenta, suscripciones, saldo); datos sensibles. **Toda app móvil, tenga o no esas funciones** | Aplicación web con acceso para clientes, app para Android o iPhone | 5 a 6 rondas | Flujo completo, nivel de seguridad reforzado y revisores independientes obligatorios |
 
-Ante la duda entre dos rutas, elige la mayor. La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos delicados, sube de ruta y avísale.
+Ante la duda entre dos rutas, elige la mayor y díselo. La seguridad nunca se omite: se ajusta a la ruta. Si a mitad del proyecto aparecen cuentas de usuario, pagos o datos sensibles, sube de ruta y avísale.
 
 ## 6. Lo esencial de cada fase
 
 Las guías tienen el detalle. Esto es lo que no puede faltar.
 
-- **Fase 1.** Aquí se ven las funciones a fondo. Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. Si es una app móvil, lee `movil.md` desde esta fase y usa el bloque de apps de `descubrimiento.md`. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
+- **Fase 1.** Aquí se ven las funciones a fondo. Pregunta siempre dónde y cómo se va a publicar, antes de pensar en tecnología: el hosting del cliente decide qué se puede construir. Si es una app móvil, lee `movil.md` desde esta fase, usa el bloque de apps de `descubrimiento.md` y pregunta cómo llegará a los teléfonos y de quién es la cuenta de desarrollador. Pide dos o tres sitios de referencia y, si quiere animaciones, el enlace y el momento exacto que le gusta.
 - **Fase 2.** Revisa la lógica antes de aceptar la lista de funciones: quién puede hacer qué, qué pasa cuando algo falla, qué choca con el hosting, el presupuesto, el plazo o la ley. Propón qué quitar, qué simplificar y qué añadir. En proyectos de cliente, lo que el usuario no sepa responder va a `preguntas-cliente.md`, en lenguaje llano.
-- **Fase 3.** Elige la tecnología más sencilla que cumpla y que el hosting soporte. El primer hito es siempre publicar un "hola mundo" en el hosting real con el método real: los problemas de hosting se descubren el primer día, no el último.
+- **Fase 3.** Elige la tecnología más sencilla que cumpla y que el hosting soporte. El primer hito es siempre publicar un "hola mundo" en el hosting real con el método real: los problemas de hosting se descubren el primer día, no el último. En una app, el primer hito es instalarla en un teléfono real por el mismo camino que usarán las personas que la prueben.
 - **Fase 4.** El usuario aprueba estructura, estilo y animación. El color lo decides y lo verificas tú. No avances con una paleta que no dé PASA.
 - **Fase 5.** Construye por hitos verticales: cada uno deja algo que funciona de punta a punta. Cada hito termina con una prueba guiada: pasos numerados y el resultado esperado, descrito con palabras y no con colores.
 - **Fase 6.** Mide antes y después. No declares mejoras que no mediste.
